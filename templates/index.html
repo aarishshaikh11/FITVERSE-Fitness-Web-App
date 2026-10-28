@@ -1,0 +1,61 @@
+{% extends "base.html" %} {% block title %}Dashboard{% endblock %} {% block breadcrumb %}Dashboard{% endblock %} {% block content %}
+YOUR FITNESS JOURNEY
+Make today count.
+Every rep is a vote for the person you're becoming.
+
+Explore workouts ↗
+YOUR NEXT LEVEL STARTS HERE
+Train with purpose.
+Live with power.
+Build a routine that works for you. Track your effort, celebrate progress, and keep showing up.
+
+Find your workout →
+FV+
+FOCUS 100%
+BUILT BY YOU
+01 / KEEP MOVING
+↗TODAY
+0
+Workouts completed
+Keep it going
+◉TODAY
+0
+Calories logged kcal
+Food tracker
+✦TODAY
+0g
+Protein logged
+Add food ↗
+STAY CONSISTENT
+Your activity
+LAST 7 DAYS
+Completed workoutsOne day at a time.
+GET MOVING
+Quick start
+✳
+{% for workout in workouts[:3] %}
+{{ loop.index|string }}
+{{ workout.name }}{{ workout.duration }} · {{ workout.focus }}
+↗
+{% endfor %}
+View all workout plans →
+RECENT ACTIVITY
+Workout history
+View all ↗
+{% if recent_workouts %}
+{% for item in recent_workouts %}
+✓
+{{ item.workout_name }}{{ item.completed_on }}
+COMPLETED
+{% endfor %}
+{% else %}
+↗Your progress starts here.
+Complete a workout and it will show up here.
+
+{% endif %}
+“
+You don't have to be extreme. You just have to be consistent.
+
+A REMINDER FOR YOUR JOURNEY
+FITVERSE✳
+{% endblock %} {% block scripts %} {% endblock %}
