@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Nutrition tracker{% endblock %}
+{% block breadcrumb %}Nutrition tracker{% endblock %}
+{% block content %}
+<section class="welcome-row reveal"><div><div class="eyebrow"><span class="eyebrow-line"></span> FUEL YOUR PROGRESS</div><h1>Eat well. <span class="text-gradient">Feel strong.</span></h1><p class="subheading">Log what you eat and build awareness of your daily nutrition.</p></div><div class="date-chip"><span class="status-dot"></span> TODAY'S LOG</div></section>
+<section class="nutrition-summary">
+  <article class="nutrition-total reveal"><span class="total-label">TOTAL ENERGY</span><div class="total-number count-up" data-count="{{ calories }}">0</div><span class="total-unit">KCAL LOGGED TODAY</span><div class="total-track"><span style="width: {{ [calories / 25, 100]|min }}%"></span></div><small>Tracking only — personal energy needs vary.</small></article>
+  <article class="nutrition-total protein-total reveal"><span class="total-label">TOTAL PROTEIN</span><div class="total-number"><span class="count-up" data-count="{{ protein }}">0</span><small>g</small></div><span class="total-unit">PROTEIN LOGGED TODAY</span><div class="total-track"><span style="width: {{ [protein / 1.5, 100]|min }}%"></span></div><small>Needs depend on your body and activity.</small></article>
+</section>
+<section class="nutrition-layout">
+  <article class="panel nutrition-form-panel reveal"><div class="panel-heading"><div><div class="eyebrow">ADD AN ENTRY</div><h3>What did you eat?</h3></div><span class="form-icon">＋</span></div><form method="post" class="stack-form">
+    <label for="food_name">Food or drink name</label><input id="food_name" name="food_name" type="text" placeholder="e.g. Oats with milk" maxlength="100" required>
+    <div class="form-two-col"><div><label for="calories">Calories (kcal)</label><input id="calories" name="calories" type="number" min="0" max="10000" placeholder="350" required></div><div><label for="protein">Protein (grams)</label><input id="protein" name="protein" type="number" min="0" max="500" step="0.1" placeholder="15" required></div></div>
+    <button class="button button-primary button-full" type="submit">Add to today's log <span>＋</span></button><p class="form-footnote">Use values from a food label or a reliable nutrition source for better estimates.</p>
+  </form></article>
+  <article class="panel food-log-panel reveal"><div class="panel-heading"><div><div class="eyebrow">TODAY'S INTAKE</div><h3>Food log <span class="count-badge">{{ entries|length }}</span></h3></div><span class="log-date">TODAY</span></div>
+    {% if entries %}<div class="food-list">{% for entry in entries %}<div class="food-item"><div class="food-icon">{{ loop.index }}</div><div class="food-details"><strong>{{ entry.food_name }}</strong><span>{{ entry.calories }} kcal · {{ entry.protein|round(1) }} g protein</span></div><form method="post" action="{{ url_for('delete_food', food_id=entry.id) }}" onsubmit="return confirm('Delete this food entry?')"><button class="delete-button" aria-label="Delete {{ entry.food_name }}" title="Delete entry">×</button></form></div>{% endfor %}</div>{% else %}<div class="empty-state"><span>◉</span><strong>Your food log is empty.</strong><p>Add your first meal using the form.</p></div>{% endif %}
+  </article>
+</section>
+<div class="notice reveal"><span>ⓘ</span><p>Nutrition values are estimates and depend on portion size and preparation. This tracker is for general awareness, not medical nutrition advice.</p></div>
+{% endblock %}

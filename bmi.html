@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}BMI calculator{% endblock %}
+{% block breadcrumb %}BMI calculator{% endblock %}
+{% block content %}
+<section class="welcome-row reveal"><div><div class="eyebrow"><span class="eyebrow-line"></span> KNOW YOUR NUMBERS</div><h1>Understand your <span class="text-gradient">baseline.</span></h1><p class="subheading">Calculate your Body Mass Index using your height and weight.</p></div><div class="bmi-symbol">BMI <span>⌁</span></div></section>
+<section class="bmi-layout">
+  <article class="panel bmi-form-panel reveal"><div class="panel-heading"><div><div class="eyebrow">YOUR DETAILS</div><h3>BMI calculator</h3></div><span class="form-icon">⌁</span></div>
+  <form method="post" class="stack-form">
+    <label for="height_cm">Height <span class="label-unit">CENTIMETRES</span></label><div class="input-with-unit"><input id="height_cm" name="height_cm" type="number" min="80" max="250" step="0.1" placeholder="e.g. 170" required><span>cm</span></div>
+    <label for="weight_kg">Weight <span class="label-unit">KILOGRAMS</span></label><div class="input-with-unit"><input id="weight_kg" name="weight_kg" type="number" min="10" max="350" step="0.1" placeholder="e.g. 65" required><span>kg</span></div>
+    <button class="button button-primary button-full" type="submit">Calculate my BMI <span>→</span></button>
+  </form>
+  <div class="formula-box"><span>THE FORMULA</span><strong>BMI = weight (kg) ÷ height² (m)</strong></div>
+  </article>
+  <article class="panel bmi-result-panel reveal"><div class="panel-heading"><div><div class="eyebrow">YOUR RESULT</div><h3>BMI overview</h3></div><span class="panel-chip">ADULT REFERENCE</span></div>
+    {% if result %}
+    <div class="bmi-result"><div class="bmi-score count-up" data-count="{{ result.value }}">0</div><span class="bmi-category">{{ result.category }}</span><div class="bmi-scale"><div class="scale-segments"><span></span><span></span><span></span><span></span></div><div class="scale-labels"><span>Below 18.5</span><span>18.5–24.9</span><span>25–29.9</span><span>30+</span></div></div><p class="result-note">{{ result.note }}</p></div>
+    {% else %}
+    <div class="bmi-empty"><div class="bmi-circle"><span>?</span></div><h3>Your result will appear here.</h3><p>Enter your height and weight to calculate BMI. No data is stored by this calculator.</p></div>
+    {% endif %}
+  </article>
+</section>
+<div class="notice reveal"><span>ⓘ</span><p><strong>Important:</strong> BMI is a screening tool, not a diagnosis. Adult cut-offs are not appropriate for everyone, including children and teens, and do not account for muscle mass or individual health context. Speak with a qualified health professional for personal advice.</p></div>
+{% endblock %}

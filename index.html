@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block breadcrumb %}Dashboard{% endblock %}
+{% block content %}
+<section class="welcome-row reveal">
+  <div><div class="eyebrow"><span class="eyebrow-line"></span> YOUR FITNESS JOURNEY</div><h1>Make today <span class="text-gradient">count.</span></h1><p class="subheading">Every rep is a vote for the person you're becoming.</p></div>
+  <a class="button button-primary" href="{{ url_for('workouts') }}">Explore workouts <span>↗</span></a>
+</section>
+
+<section class="hero-card reveal">
+  <div class="hero-copy"><span class="pill"><span class="pulse-dot"></span> YOUR NEXT LEVEL STARTS HERE</span><h2>Train with purpose.<br><span>Live with power.</span></h2><p>Build a routine that works for you. Track your effort, celebrate progress, and keep showing up.</p><a class="button button-lime" href="{{ url_for('workouts') }}">Find your workout <span>→</span></a></div>
+  <div class="hero-art" aria-hidden="true"><div class="hero-ring ring-one"></div><div class="hero-ring ring-two"></div><div class="hero-ring ring-three"></div><div class="hero-orb">FV<span>+</span></div><div class="floating-tag tag-top">FOCUS <b>100%</b></div><div class="floating-tag tag-bottom"><span class="status-dot"></span> BUILT BY YOU</div></div>
+  <div class="hero-number">01 <span>/ KEEP MOVING</span></div>
+</section>
+
+<section class="stats-grid">
+  <article class="stat-card reveal"><div class="stat-top"><span class="stat-icon lime-icon">↗</span><span class="stat-tag">TODAY</span></div><div class="stat-value count-up" data-count="{{ completed_today }}">0</div><div class="stat-label">Workouts completed</div><div class="stat-bottom"><span class="tiny-bar"><i style="width: {{ [completed_today * 25, 100]|min }}%"></i></span><span>Keep it going</span></div></article>
+  <article class="stat-card reveal"><div class="stat-top"><span class="stat-icon orange-icon">◉</span><span class="stat-tag">TODAY</span></div><div class="stat-value count-up" data-count="{{ calories }}">0</div><div class="stat-label">Calories logged <span class="unit">kcal</span></div><div class="stat-bottom"><span class="tiny-bar orange-bar"><i style="width: {{ [calories / 25, 100]|min }}%"></i></span><span>Food tracker</span></div></article>
+  <article class="stat-card reveal"><div class="stat-top"><span class="stat-icon blue-icon">✦</span><span class="stat-tag">TODAY</span></div><div class="stat-value"><span class="count-up" data-count="{{ protein }}">0</span><small>g</small></div><div class="stat-label">Protein logged</div><div class="stat-bottom"><span class="tiny-bar blue-bar"><i style="width: {{ [protein / 1.5, 100]|min }}%"></i></span><a href="{{ url_for('nutrition') }}">Add food ↗</a></div></article>
+</section>
+
+<section class="dashboard-grid">
+  <article class="panel progress-panel reveal"><div class="panel-heading"><div><div class="eyebrow">STAY CONSISTENT</div><h3>Your activity</h3></div><span class="panel-chip">LAST 7 DAYS</span></div><div class="chart-wrap"><canvas id="activityChart" aria-label="Workout activity over the last seven days"></canvas></div><div class="chart-foot"><span><i class="legend-dot"></i> Completed workouts</span><span class="chart-note">One day at a time.</span></div></article>
+  <article class="panel quick-panel reveal"><div class="panel-heading"><div><div class="eyebrow">GET MOVING</div><h3>Quick start</h3></div><span class="sparkle">✳</span></div><div class="quick-list">
+    {% for workout in workouts[:3] %}
+    <div class="quick-workout"><div class="workout-symbol">{{ loop.index|string }}</div><div class="quick-info"><strong>{{ workout.name }}</strong><span>{{ workout.duration }} · {{ workout.focus }}</span></div><form action="{{ url_for('complete_workout') }}" method="post"><input type="hidden" name="workout_name" value="{{ workout.name }}"><button class="circle-arrow" aria-label="Mark {{ workout.name }} complete" title="Mark complete">↗</button></form></div>
+    {% endfor %}
+  </div><a class="text-link" href="{{ url_for('workouts') }}">View all workout plans <span>→</span></a></article>
+</section>
+
+<section class="dashboard-grid lower-grid">
+  <article class="panel reveal"><div class="panel-heading"><div><div class="eyebrow">RECENT ACTIVITY</div><h3>Workout history</h3></div><a class="text-link" href="{{ url_for('workouts') }}">View all ↗</a></div>
+  {% if recent_workouts %}<div class="history-list">{% for item in recent_workouts %}<div class="history-item"><span class="check-badge">✓</span><div><strong>{{ item.workout_name }}</strong><small>{{ item.completed_on }}</small></div><span class="history-status">COMPLETED</span></div>{% endfor %}</div>{% else %}<div class="empty-state"><span>↗</span><strong>Your progress starts here.</strong><p>Complete a workout and it will show up here.</p></div>{% endif %}</article>
+  <article class="quote-panel reveal"><span class="quote-mark">“</span><p>You don't have to be extreme. You just have to be consistent.</p><span class="quote-caption">A REMINDER FOR YOUR JOURNEY</span><div class="quote-decoration">FITVERSE<span>✳</span></div></article>
+</section>
+{% endblock %}
+{% block scripts %}
+<script>
+  window.fitverseChart = {
+    labels: {{ chart_labels|tojson }},
+    values: {{ chart_values|tojson }}
+  };
+</script>
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}Workout plans{% endblock %}
+{% block breadcrumb %}Workout plans{% endblock %}
+{% block content %}
+<section class="welcome-row reveal"><div><div class="eyebrow"><span class="eyebrow-line"></span> MOVE WITH INTENTION</div><h1>Find your <span class="text-gradient">strong.</span></h1><p class="subheading">Pick a plan, focus on good form, and progress at your own pace.</p></div><div class="workout-count"><strong>{{ workouts|length }}</strong><span>PLANS TO EXPLORE</span></div></section>
+<div class="filter-row reveal"><div class="filter-pills"><button class="filter-pill active" data-filter="all">All plans</button><button class="filter-pill" data-filter="Strength">Strength</button><button class="filter-pill" data-filter="Beginner">Beginner</button><button class="filter-pill" data-filter="Recovery">Recovery</button></div><span class="filter-hint">CHOOSE WHAT FITS YOUR DAY</span></div>
+<section class="workout-grid">
+{% for workout in workouts %}
+<article class="workout-card reveal" data-category="{{ workout.category }}">
+  <div class="workout-card-top"><span class="workout-index">PLAN 0{{ loop.index }}</span><span class="category-pill">{{ workout.category }}</span></div>
+  <div class="workout-visual visual-{{ loop.index }}"><div class="visual-lines"></div><div class="visual-number">0{{ loop.index }}</div><span class="visual-symbol">{% if loop.index == 1 %}✳{% elif loop.index == 2 %}↗{% elif loop.index == 3 %}◈{% elif loop.index == 4 %}＋{% else %}⌁{% endif %}</span></div>
+  <div class="workout-card-body"><div class="workout-meta"><span>◷ {{ workout.duration }}</span><span>◉ {{ workout.level }}</span></div><h3>{{ workout.name }}</h3><p>{{ workout.focus }}</p>
+  <div class="exercise-list">{% for exercise, reps in workout.exercises %}<div class="exercise-row"><span>{{ exercise }}</span><small>{{ reps }}</small></div>{% endfor %}</div>
+  <form action="{{ url_for('complete_workout') }}" method="post"><input type="hidden" name="workout_name" value="{{ workout.name }}"><button class="button button-primary button-full" type="submit">Mark workout complete <span>✓</span></button></form>
+  </div>
+</article>
+{% endfor %}
+</section>
+<div class="notice reveal"><span>ⓘ</span><p><strong>Train smart:</strong> Warm up first, use a manageable load, focus on technique, and stop if you feel pain. Adapt exercises to your ability.</p></div>
+{% endblock %}
