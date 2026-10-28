@@ -1,0 +1,25 @@
+{% extends "base.html" %} {% block title %}Workout plans{% endblock %} {% block breadcrumb %}Workout plans{% endblock %} {% block content %}
+MOVE WITH INTENTION
+Find your strong.
+Pick a plan, focus on good form, and progress at your own pace.
+
+{{ workouts|length }}PLANS TO EXPLORE
+All plansStrengthBeginnerRecovery
+CHOOSE WHAT FITS YOUR DAY
+{% for workout in workouts %}
+PLAN 0{{ loop.index }}{{ workout.category }}
+0{{ loop.index }}
+{% if loop.index == 1 %}✳{% elif loop.index == 2 %}↗{% elif loop.index == 3 %}◈{% elif loop.index == 4 %}＋{% else %}⌁{% endif %}
+◷ {{ workout.duration }}◉ {{ workout.level }}
+{{ workout.name }}
+{{ workout.focus }}
+
+{% for exercise, reps in workout.exercises %}
+{{ exercise }}{{ reps }}
+{% endfor %}
+Mark workout complete ✓
+{% endfor %}
+ⓘ
+Train smart: Warm up first, use a manageable load, focus on technique, and stop if you feel pain. Adapt exercises to your ability.
+
+{% endblock %}
