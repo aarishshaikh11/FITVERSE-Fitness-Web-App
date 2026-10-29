@@ -1,0 +1,44 @@
+{% extends "base.html" %} {% block title %}Nutrition tracker{% endblock %} {% block breadcrumb %}Nutrition tracker{% endblock %} {% block content %}
+FUEL YOUR PROGRESS
+Eat well. Feel strong.
+Log what you eat and build awareness of your daily nutrition.
+
+TODAY'S LOG
+TOTAL ENERGY
+0
+KCAL LOGGED TODAY
+Tracking only — personal energy needs vary.
+TOTAL PROTEIN
+0g
+PROTEIN LOGGED TODAY
+Needs depend on your body and activity.
+ADD AN ENTRY
+What did you eat?
+＋
+Food or drink name
+e.g. Oats with milk
+Calories (kcal)
+350
+Protein (grams)
+15
+Add to today's log ＋
+Use values from a food label or a reliable nutrition source for better estimates.
+
+TODAY'S INTAKE
+Food log {{ entries|length }}
+TODAY
+{% if entries %}
+{% for entry in entries %}
+{{ loop.index }}
+{{ entry.food_name }}{{ entry.calories }} kcal · {{ entry.protein|round(1) }} g protein
+×
+{% endfor %}
+{% else %}
+◉Your food log is empty.
+Add your first meal using the form.
+
+{% endif %}
+ⓘ
+Nutrition values are estimates and depend on portion size and preparation. This tracker is for general awareness, not medical nutrition advice.
+
+{% endblock %}
