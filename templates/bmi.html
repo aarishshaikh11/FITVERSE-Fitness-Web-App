@@ -1,0 +1,36 @@
+{% extends "base.html" %} {% block title %}BMI calculator{% endblock %} {% block breadcrumb %}BMI calculator{% endblock %} {% block content %}
+KNOW YOUR NUMBERS
+Understand your baseline.
+Calculate your Body Mass Index using your height and weight.
+
+BMI ⌁
+YOUR DETAILS
+BMI calculator
+⌁
+Height CENTIMETRES
+e.g. 170
+cm
+Weight KILOGRAMS
+e.g. 65
+kg
+Calculate my BMI →
+THE FORMULABMI = weight (kg) ÷ height² (m)
+YOUR RESULT
+BMI overview
+ADULT REFERENCE
+{% if result %}
+0
+{{ result.category }}
+Below 18.518.5–24.925–29.930+
+{{ result.note }}
+
+{% else %}
+?
+Your result will appear here.
+Enter your height and weight to calculate BMI. No data is stored by this calculator.
+
+{% endif %}
+ⓘ
+Important: BMI is a screening tool, not a diagnosis. Adult cut-offs are not appropriate for everyone, including children and teens, and do not account for muscle mass or individual health context. Speak with a qualified health professional for personal advice.
+
+{% endblock %}
